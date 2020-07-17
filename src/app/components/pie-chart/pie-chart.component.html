@@ -1,0 +1,30 @@
+<!--div *ngIf="pieChartData" style="padding: 20px;width: 100%;">
+  <div class="percentage" style="  border-radius: 5px 0px 0px 5px;" [style.width]="pieChartData[0].percentage"
+    [style.background-color]="pieChartData[0].color">
+  </div>
+  <div class="percentage" [style.width]="pieChartData[1].percentage" [style.background-color]="pieChartData[1].color">
+  </div>
+  <div class="percentage" style="  border-radius: 0px 5px 5px 0px;" [style.width]="pieChartData[2].percentage" [style.background-color]="pieChartData[2].color">
+  </div>
+</div-->
+
+<span style="padding:20px;text-align: center;font-size: large;font-family:sans-serif;"><strong>{{currMap.name}}</strong>
+</span>
+<span style="text-align: center;font-size: 14px;font-family:sans-serif;">
+  <br>
+  Showing data as of -
+  <strong>
+    {{date.toLocaleDateString('en-GB', {  
+  month : 'short',
+  day : 'numeric'})}}, {{date.toLocaleTimeString()}}
+  </strong>
+  <br>
+  Data source - <strong>Covid19india.org</strong>
+</span>
+
+<div style="width: 100%;height: 1px;background-color: #cccccc;margin: 15px 0px;"></div>
+
+<span style="text-align: center;font-size: 15px;display: inline;"> Total
+  <strong>{{genericData[confirmedParameter.totalKey].toLocaleString()}}</strong> cases </span>
+
+<div #piechart id="piechart"></div>

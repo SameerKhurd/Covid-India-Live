@@ -1,0 +1,57 @@
+
+.alert-tappable.alert-radio {
+  height: auto;
+  contain: content;
+}
+
+.alert-radio-label.sc-ion-alert-md,
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: normal;
+}
+.bg-class {
+  background-color: #bdd4e7;
+  background-image: linear-gradient(315deg, #bdd4e7 0%, #8693ab 74%);
+}
+
+.cust {
+  background-color: #aaaaaa;
+  width: 100%;
+  color: red;
+}
+
+.cust1 {
+  background-color: #eeeeee;
+  margin: 2 2 2 2;
+  border-radius: 10%;
+}
+
+ion-col {
+  padding: 2;
+}
+
+ion-row {
+  animation: popIn 0.2s calc(var(--animation-order) * 70mx) both ease-in;
+}
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translate(-8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.mat-select-panel mat-option.mat-option {
+  height: unset;
+}
+
+.mat-option-text.mat-option-text {
+  white-space: normal;
+}
+
+.mat-select-panel {
+  background: rgba(0, 0, 255, 0.5);
+}

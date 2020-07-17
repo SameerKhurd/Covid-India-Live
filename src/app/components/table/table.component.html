@@ -1,0 +1,83 @@
+<ion-card class="ion-no-padding" style="border-radius: 40px 40px 0px 0px;width: 100%;padding: 0px;margin: 0px;background-color: white;">
+  <ion-card-content class="ion-no-padding">
+
+    <div style="text-align: center;font-size: 25px;padding: 3px;color: gray;">
+      <ion-icon name="menu-outline"></ion-icon>
+      <br>
+      <span style="font-size: 11px;"> * *</span>
+      <span *ngFor="let parameter of tableParameters;" [style.color]="parameter.color"
+        style="font-size: 11px;padding: 7px;">
+        {{parameter.id}} - {{parameter.name}}
+      </span>
+    </div>
+
+    <ion-grid
+      style="font-family: -apple-system, Roboto, sans-serif;">
+
+      <ion-row class="table-header">
+        <ion-col size="4" style="text-align:left;padding-left: 5px;">
+          <ion-chip (click)="onTap(mainParameter.key)" style="background-color: #f5f5f5;color:gray">
+            {{mainParameter.name}}
+            <ion-icon *ngIf="sortKey==mainParameter.key && sortAscending" name="arrow-up-outline"
+              style="font-size: 15px;">
+            </ion-icon>
+            <ion-icon *ngIf="sortKey==mainParameter.key && !sortAscending" name="arrow-down-outline"
+              style="font-size: 15px;">
+            </ion-icon>
+          </ion-chip>
+        </ion-col>
+        <ion-col size="2" *ngFor="let parameter of tableParameters;">
+          <ion-chip *ngIf="sortKey==parameter.totalKey" (click)="onTap(parameter.totalKey)"
+            [style.color]="parameter.color" [style.background-color]="parameter.backgroundColor"
+            style="background-color: #f5f5f5;text-align: right; width: 100%;font-weight: bolder;">
+            {{parameter.id}}
+            <ion-icon *ngIf="sortKey==parameter.totalKey && sortAscending" name="arrow-up-outline"
+              [style.color]="parameter.color" style="font-size: 15px;"></ion-icon>
+            <ion-icon *ngIf="sortKey==parameter.totalKey && !sortAscending" name="arrow-down-outline"
+              [style.color]="parameter.color" style="font-size: 15px;"></ion-icon>
+          </ion-chip>
+          <ion-chip *ngIf="sortKey!=parameter.totalKey" (click)="onTap(parameter.totalKey)"
+            [style.color]="parameter.color"
+            style="background-color: #f5f5f5;text-align: right; width: 100%;font-weight: bolder;">
+            {{parameter.id}}
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let item of regionWiseData;let i = index" style="background-color: #f5f5f5;margin-top: 10px;border-radius: 5px;     font-size: 12px;
+        font-weight: bold;">
+
+        <ion-col size="1">
+          <div>{{sortAscending ? i+1: regionWiseData.length-i}} </div>
+        </ion-col>
+
+        <ion-col size="3">
+          <div style="text-align:left;">
+            {{item[mainParameter.key]}}
+          </div>
+        </ion-col>
+
+        <ion-col size="2" *ngFor="let parameter of tableParameters;">
+          <div *ngIf="sortKey==parameter.totalKey" class="table-entries" [style.color]="parameter.color"
+            [style.background-color]="parameter.backgroundColor">
+            {{item[parameter.totalKey].toLocaleString()}}
+            <small *ngIf="parameter.cardDisplay && item[parameter.todayKey]!=0">
+              <br>
+              +{{item[parameter.todayKey].toLocaleString()}}
+            </small>
+          </div>
+          <div *ngIf="sortKey!=parameter.totalKey" class="table-entries" [style.color]="parameter.color">
+            {{item[parameter.totalKey].toLocaleString()}}
+            <small *ngIf="parameter.cardDisplay && item[parameter.todayKey]!=0">
+              <br>
+              +{{item[parameter.todayKey].toLocaleString()}}
+            </small>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <br>
+    <br>
+  </ion-card-content>
+
+</ion-card>

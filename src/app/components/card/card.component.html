@@ -1,0 +1,73 @@
+<ion-grid>
+  <!--ion-row>
+          <ion-col [style.color]="parameter.color" *ngFor="let parameter of dataParameters"
+            style="text-align: center;font-size: 14px; font-weight: bold;">
+            {{parameter.name}}
+            <br>
+            <span style="font-size: 16px;">{{genericData[parameter["totalKey"]].toLocaleString()}}</span>
+            <br>
+            <small *ngIf="parameter.cardDisplay">
+              {{genericData[parameter["todayKey"]].toLocaleString()}}
+              <ion-icon name="caret-up-outline"></ion-icon>
+            </small>
+          </ion-col>
+        </ion-row-->
+
+  <ion-row class="ion-no-padding" *ngIf="genericData">
+    <ion-col class="ion-no-padding" size="4" *ngFor="let cardParameter of cardParameters">
+      <ion-row>
+        <div class="my-card-header" [style.color]="cardParameter['color']">
+          <span style="font-size: 14px;">
+            <strong>
+              <ion-chip [style.background-color]="cardParameter.color" style="color: white; opacity: 0.75;">
+                {{ cardParameter["name"] }}</ion-chip>
+            </strong>
+          </span>
+          <br />
+          <span style="font-size: 16px;">
+            <strong>
+              {{ genericData[cardParameter["totalKey"]].toLocaleString() }}
+            </strong>
+            <br />
+            <small>
+              {{ genericData[cardParameter["todayKey"]].toLocaleString() }}
+              <ion-icon name="caret-up-outline"></ion-icon>
+            </small>
+          </span>
+        </div>
+      </ion-row>
+      <ion-row>
+        <app-card-chart [cardParameter]="cardParameter" [data]="timeWiseData" style="padding-left: 3px;">
+        </app-card-chart>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-chip [style.background-color]="activeParameter.color" style="color: white; opacity: 0.75;">
+        {{ activeParameter["name"] }}
+      </ion-chip>
+
+        <br>
+        <span style="font-size: 16px;">
+          <strong>
+            {{ genericData[activeParameter["totalKey"]].toLocaleString() }}
+          </strong>
+
+        </span>
+    </ion-col>
+    <ion-col>
+      <div class="my-card-header" [style.background-color]="testParameter['color']" style="color: white;">
+        <span style="font-size: 14px;">
+          <strong>{{ testParameter["name"] }}</strong>
+        </span>
+        <span style="font-size: 16px;">
+          <strong>
+            {{ genericData[testParameter["totalKey"]].toLocaleString() }}
+          </strong>
+
+        </span>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

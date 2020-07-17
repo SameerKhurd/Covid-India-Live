@@ -1,0 +1,40 @@
+<div style="width: 100%; padding-top: 10px; text-align: center;">
+  <div *ngFor="let parameter of mapParameters; let i = index" style="display: inline;">
+    <ion-chip *ngIf="i != currParameterIndex" (click)="onParameterchange(i)">
+      <ion-label>{{ parameter.name }}</ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="i == currParameterIndex" [style.background-color]="parameter.color"
+      style="color: white; opacity: 0.75;">
+      <ion-label>{{ parameter.name }}</ion-label>
+    </ion-chip>
+  </div>
+</div>
+<div style="display: block;">
+  <div #map id="map-area"></div>
+  <!--ion-fab style="float: right;" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="arrow-forward-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-->
+</div>
+
+<div #mapLabel id="map-label"></div>
+
+<!--ion-slides (ionSlideDidChange)="do()">
+
+            <ion-slide value="1" >
+                <div class="slide">
+                    <h2>Welcome</h2>
+                    <p>The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a
+                        demonstration of proper code use.</p>
+                </div>
+            </ion-slide>
+
+            <ion-slide  value="1">
+                <div class="slide">
+                    <h2>Welcome</h2>
+                    <p>The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a
+                        demonstration of proper code use.</p>
+                </div>
+            </ion-slide>
+        </ion-slides-->

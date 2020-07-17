@@ -1,0 +1,80 @@
+<ion-header [translucent]="true" class="ion-no-padding">
+  <ion-toolbar class="ion-no-padding" color="primary">
+    <ion-grid *ngIf="genericData" class="ion-no-padding">
+      <ion-row class="ion-no-padding" style="padding-top:5px;padding-bottom:5px;background-color: #fafafa;">
+        <ion-col size="2.4" [style.color]="parameter.color" *ngFor="let parameter of genericParameters"
+          style="text-align: center;font-size: 12px; font-weight: bold;padding: 5px;">
+          {{parameter.name}}
+          <br>
+          <span style="font-size: 14px;">{{genericData[parameter["totalKey"]].toLocaleString()}}</span>
+          <br>
+          <small *ngIf="parameter.cardDisplay && genericData[parameter.todayKey]!=0">
+            {{genericData[parameter["todayKey"]].toLocaleString()}}
+            <ion-icon name="caret-up-outline"></ion-icon>
+          </small>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-progress-bar [type]="progressBarType" *ngIf="showProgressBar" value="1"></ion-progress-bar>
+
+<ion-content class="ion-no-padding bg-class " style="--ion-background-color: #bdd4e7">
+  <ion-refresher mode="md" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+  <small style="color: #888888;">
+
+    <ion-icon name="chevron-down-outline"></ion-icon> Pull down to refresh <ion-icon name="chevron-down-outline">
+    </ion-icon>
+  </small>
+
+  <div *ngIf="!genericData" style="font-size: medium;color: #555555;margin-top: 50%;">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+    <div *ngIf="!loading">
+      <strong>Unable to connect</strong>
+      <br>
+      Make sure you have an active
+      <br>
+      Internet Connection
+    </div>
+  </div>
+
+  <div *ngIf="genericData" style="padding-top: 0px;">
+    <!--ion-card class="ion-no-padding" style="border-radius: 15px;">
+      <ion-card-content class="ion-no-padding">
+        <app-card [dataService]="stateDataService"> </app-card>
+      </ion-card-content>
+    </ion-card-->
+
+    <ion-card class="ion-no-padding" style="border-radius: 15px;--ion-background-color: white">
+      <ion-card-content class="ion-no-padding">
+        <app-pie-chart [dataService]="countryDataService"> </app-pie-chart>
+      </ion-card-content>
+    </ion-card>
+
+    <!--ion-card class="ion-no-padding" style="border-radius: 15px;">
+      <ion-card-content class="ion-no-padding">
+        <app-card [dataService]="stateDataService"> </app-card>
+      </ion-card-content>
+    </ion-card-->
+
+    <ion-card class="ion-no-padding" style="border-radius: 15px;--ion-background-color: white">
+      <ion-card-content class="ion-no-padding">
+        <app-bar-chart [dataService]="countryDataService"> </app-bar-chart>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="ion-no-padding" style="border-radius: 15px;--ion-background-color: white">
+      <ion-card-content class="ion-no-padding">
+        <app-map [dataService]="countryDataService"></app-map>
+      </ion-card-content>
+    </ion-card>
+
+    <app-table [dataService]="countryDataService"></app-table>
+  </div>
+  <div *ngIf="genericData" style="height: 25%;background-color: white;display: block;"></div>
+
+</ion-content>

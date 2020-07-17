@@ -1,0 +1,108 @@
+<ion-app>
+  <ion-header mode="ios" [translucent]="true" class="ion-no-border ion-no-padding">
+    <ion-toolbar class="ion-no-padding" style="--padding-top:0px;--padding-bottom:0px;" color="primary">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" style="font-family:MuseoModerno;font-size: large; text-align: center;padding: 5px;">
+            Covid India Live
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" style="padding: 5px;">
+            <ion-segment mode="ios" value="all" [(ngModel)]="slideIndex" style="width: 80%;">
+              <ion-segment-button *ngFor="let slideName of slideNames; let i=index" [value]="i"
+                (click)="onSlideButtonTap(i)">
+                <ion-label>{{slideName}}</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="showNetworkElement" class="ion-no-padding">
+          <ion-col size="12" class="ion-no-padding">
+            <div *ngIf="networkConnectivity"
+              style="text-align:center;background-color: #219c09;padding: 5px;color:white;font-size: 14px;">
+              Connected
+            </div>
+            <div *ngIf="!networkConnectivity"
+              style="text-align: center; background-color: #f34d4d;padding: 5px;color:white;font-size: 14px;">
+              <div *ngIf="!retry">
+                <ion-text>
+                  Unable to Connect
+                </ion-text>
+
+                <ion-text style="padding-right: 5px;color: #222222;font-size: 14px;" (click)="onRetry()">
+                  <strong>
+                    <ion-icon name="refresh-outline"></ion-icon>
+                  </strong>
+                  <ion-label style="text-decoration: underline;"> Retry</ion-label>
+                </ion-text>
+
+              </div>
+              <div *ngIf="retry" style="font-size: 14px;">
+                <ion-spinner style=" width: 14px !important;height: 14px !important;color:white">
+                </ion-spinner>
+                Retrying
+              </div>
+
+              <!--ion-text style="background-color: #2db68d;color:white; opacity: 0.75; ">
+          <ion-label>
+            <ion-icon slot="start" name="refresh-outline"></ion-icon> Retry
+          </ion-label>
+        </ion-text-->
+              <!--span style="width: 100%;display: block;"><small>Make sure you have an active Internet connection</small></span-->
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-toolbar>
+  </ion-header>
+  <!--ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list id="inbox-list">
+          <ion-list-header>Inbox</ion-list-header>
+          <ion-note>hi@ionicframework.com</ion-note>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
+              detail="false" [class.selected]="selectedIndex == i">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+        <ion-list id="labels-list">
+          <ion-list-header>Labels</ion-list-header>
+
+          <ion-item *ngFor="let label of labels" lines="none">
+            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-label>{{ label }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  </ion-split-pane-->
+
+  <ion-content [fullscreen]="true">
+    <ion-slides #slide (ionSlideDidChange)="onSlideChange(slide)">
+
+      <ion-slide>
+
+        <app-state></app-state>
+      </ion-slide>
+
+      <ion-slide>
+        <app-country></app-country>
+
+      </ion-slide>
+    </ion-slides>
+
+  </ion-content>
+</ion-app>

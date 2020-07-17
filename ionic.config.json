@@ -1,0 +1,7 @@
+{
+  "name": "CovidIndiaLive",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

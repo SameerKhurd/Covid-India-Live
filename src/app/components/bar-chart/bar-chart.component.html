@@ -1,0 +1,39 @@
+<div style="width: 100%; padding-top: 10px; text-align: center;">
+    <div *ngFor="let parameter of barchartParameters; let i = index" style="display: inline;">
+        <ion-chip *ngIf="i != currParameterIndex" (click)="onParameterchange(i)">
+            <ion-label>{{ parameter.name }}</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="i == currParameterIndex" [style.background-color]="parameter.color"
+            style="color: white; opacity: 0.75;">
+            <ion-label>{{ parameter.name }}</ion-label>
+        </ion-chip>
+    </div>
+</div>
+<div style="text-align: center;padding-top: 10px;font-size: 15px;opacity: 0.8;" [style.color]="currParameter.color">
+    Last {{granularities[currGranularityIndex].name}} : <strong>{{total.toLocaleString()}}</strong>
+    {{currParameter.name}}
+</div>
+<div #barchart id="barchart"></div>
+<div style="width: 100%; padding: 10px; text-align: center;">
+    Last
+    <div *ngFor="let granularity of granularities; let i = index" style="display: inline;">
+        <ion-text *ngIf="i != currGranularityIndex" (click)="onGranularityChange(i)">
+            <ion-label> {{ granularity.name }} </ion-label>
+        </ion-text>
+        <ion-text *ngIf="i == currGranularityIndex" style="background-color: #2db68d;color:white; opacity: 0.75; ">
+            <ion-label>{{ granularity.name }}</ion-label>
+        </ion-text>
+    </div>
+</div>
+<div style="width: 100%; padding: 10px; text-align: center;">
+    <div *ngFor="let type of cummulativeTypes; let i = index" style="display: inline;">
+        <ion-text *ngIf="i != currCummulativeTypeIndex" (click)="onCummulativeTypeChange(i)">
+            <ion-label> {{ type.name }} </ion-label>
+        </ion-text>
+        <ion-text *ngIf="i == currCummulativeTypeIndex" style="background-color: #2db68d;color:white; opacity: 0.75; ">
+            <ion-label>
+                <ion-icon name="checkmark-sharp"></ion-icon> {{ type.name }}
+            </ion-label>
+        </ion-text>
+    </div>
+</div>
