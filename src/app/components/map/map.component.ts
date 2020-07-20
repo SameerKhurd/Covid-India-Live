@@ -100,11 +100,9 @@ export class MapComponent implements OnInit {
     })
   }
 
-
   getMaxValue() {
     return this.regionWiseData.reduce((max, p) => p[this.currParameter["totalKey"]] > max ? p[this.currParameter["totalKey"]] : max, this.regionWiseData[0][this.currParameter["totalKey"]]);
   }
-
 
   createMap() {
     console.log("[Map : Create Map]", this.mapDetail)
