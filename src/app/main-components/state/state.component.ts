@@ -12,7 +12,7 @@ import { IonContent } from '@ionic/angular';
   styleUrls: ['./state.component.scss'],
 })
 export class StateComponent implements OnInit, AfterViewInit {
-  @ViewChild('content', {static: true}) content: IonContent;
+  @ViewChild('content', { static: true }) content: IonContent;
 
   public stateMaps;
   public currState: any;
@@ -22,6 +22,7 @@ export class StateComponent implements OnInit, AfterViewInit {
   public progressBarType: string;
   public generalText: string
   public loading: boolean = true;
+  private onGoingFetch: boolean = false;
 
   constructor(public stateDataService: StateDataService, private networkService: NetworkService, private toastController: ToastController) {
     this.showProgressBar = true;
@@ -67,24 +68,35 @@ export class StateComponent implements OnInit, AfterViewInit {
     this.genericParameters = this.stateDataService.getDataParameters().filter(d => !d.percent);
 
     this.stateDataService.getDataListener().subscribe(data => {
+      this.onGoingFetch = false;
       this.genericData = data.genericData;
       this.currState = this.stateDataService.getCurrMapDetail();
       this.scrollToTop();
       this.progressBarUpdate();
     })
 
+    this.stateDataService.getLoadingListener().subscribe(bool => {
+      this.onGoingFetch = true;
+      this.showProgressBar = true;
+      this.loading = true;
+      this.progressBarType = "indeterminate"
+    })
+
     this.networkService.getNetworkConnectivityListener().subscribe(networkConnectivity => {
       this.currState = this.stateDataService.getCurrMapDetail();
-      this.loading  = false;
+      this.onGoingFetch = false;
+      this.loading = false;
       this.progressBarUpdate();
       //this.showToast();
     });
 
     this.networkService.refreshListener().subscribe(networkConnectivity => {
-      this.showProgressBar = true;
-      this.loading  = true;
-      this.stateDataService.getData();
+      this.stateDataService.onRefresh();
       //this.showToast();
+    });
+
+    this.networkService.loadStaticDataListener().subscribe(bool => {
+      this.stateDataService.loadStaticData();
     });
 
     window.addEventListener('ionPopoverDidPresent', e => {
@@ -100,8 +112,10 @@ export class StateComponent implements OnInit, AfterViewInit {
   progressBarUpdate() {
     this.progressBarType = "determinate"
     setTimeout(() => {
-      this.showProgressBar = false;
-      this.progressBarType = "indeterminate"
+      if (!this.onGoingFetch) {
+        this.showProgressBar = false;
+      }
+      //this.progressBarType = "indeterminate"
     }, 2000);
   }
 
@@ -113,7 +127,7 @@ export class StateComponent implements OnInit, AfterViewInit {
 
   onStateSelect() {
     this.showProgressBar = true;
-    this.loading  = true;
+    this.loading = true;
     console.log("[State Main  : State Changed]", this.currState);
     this.stateDataService.setCurrMap(this.currState);
     this.stateDataService.getData();
@@ -125,6 +139,10 @@ export class StateComponent implements OnInit, AfterViewInit {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+  }
+
+  showStaticData() {
+    this.networkService.loadStaticData(true);
   }
 
   async showToast() {

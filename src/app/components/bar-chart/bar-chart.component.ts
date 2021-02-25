@@ -23,6 +23,9 @@ export class BarChartComponent implements OnInit {
 
   public granularities: any;
   public currGranularityIndex: number;
+  public prevGranularityIndex: number;
+
+  public bulkMode: boolean = false;
 
   public cummulativeTypes: any;
   public currCummulativeTypeIndex: any;
@@ -57,10 +60,12 @@ export class BarChartComponent implements OnInit {
   ngOnInit() {
     console.log("[Bar-Chart : Init]")
     this.granularities = [
-      { name: "1 Month", slice: 30 },
-      { name: "15 Days", slice: 15 },
-      { name: "7 Days", slice: 7 }
-    ];
+      { name: "  All  ", slice: 0, value: "1+ year" },
+      { name: "6 Months", slice: 180, value: "6 Months" },
+      { name: "1 Month", slice: 30, value: "1 Month" },
+      { name: "15 Days", slice: 15, value: "15 Days" },
+      // { name: "7 Days", slice: 7 }
+    ].reverse();
     this.cummulativeTypes = [
       { name: "Cummulative", bool: true },
       { name: "Daily", bool: false }
@@ -78,10 +83,13 @@ export class BarChartComponent implements OnInit {
 
   onDataRecevied(data) {
     if (!data) return;
+    this.bulkMode = false;
     this.timeWiseData = data.timeWiseData;
     this.currParameterIndex = 0;
-    this.currGranularityIndex = 1;
+    this.currGranularityIndex = 0;
     this.currCummulativeTypeIndex = 1;
+    this.prevGranularityIndex = this.currGranularityIndex;
+    this.granularities[3].value = this.timeWiseData.length.toLocaleString() + " Days"
 
     this.updateCurrParameter();
     this.updateCummulative();
@@ -95,9 +103,13 @@ export class BarChartComponent implements OnInit {
   onGranularityChange(currGranularityIndex) {
     this.currGranularityIndex = currGranularityIndex;
     this.updateGranularity();
+
+    this.bulkMode = this.currGranularityIndex > 1
     this.updateChart();
     this.updateLine();
 
+    //this.prevGranularityIndex = this.currGranularityIndex;
+    //this.bulkMode = !this.bulkMode;
   }
 
   updateGranularity() {
@@ -107,9 +119,9 @@ export class BarChartComponent implements OnInit {
   onCummulativeTypeChange(currCummulativeTypeIndex) {
     this.currCummulativeTypeIndex = currCummulativeTypeIndex;
     this.updateCummulative();
+
     this.updateChart();
     this.updateLine();
-
   }
 
   updateCummulative() {
@@ -241,75 +253,55 @@ export class BarChartComponent implements OnInit {
     this.x.domain(xDomain)
     this.y.domain(yDomain).nice();
 
-    /*// Plot bars
-    let group = this.g1.selectAll("g.layer")
-      .data(d3.stack().keys(this.currkeys)(this.data))
-      .attr("fill", d => this.z(d.key));
-
-    group.exit().remove();
-
-    group.enter().append("g")
-      .classed("layer", true)
-      .attr("fill", d => this.z(d.key));
-
-    let bars = this.svg.selectAll("g.layer").selectAll("rect")
-      .data(function (d) { return d; });
-
-    bars.exit().remove();
-
-    bars.enter().append("rect")
-      .attr("width", this.x.bandwidth())
-      .merge(bars)
-      .attr("x", d => this.x(d.data[this.xColumn]))
-      .attr('y', d => this.y(0))
-      .attr('height', 0)
-      .transition().duration(this.speed)
-      .attr("y", d => this.y(d[1]))
-      .attr("height", d => this.y(d[0]) - this.y(d[1]))
-      .attr("cursor", "pointer");*/
-
+    // add new bars
     let rects = this.g1.selectAll('rect')
+      .attr("class", "verticalbar")
       .data(data);
 
     // remove exiting bars
     rects.exit().remove();
 
-    // update existing bars
-    //this.chart.selectAll('rects').transition()
-    /*rects.transition().duration(this.speed)
-      .style('fill', this.currParameter["color"])
-      .style("opacity", 0.5)
-      .attr('x', d => this.x(d[this.xColumn]))
-      .attr('y', d => this.y(d[this.currParameter[this.key]]))
-      .attr("width", this.x.bandwidth())
-      .attr('height', d => this.height - this.y(d[this.currParameter[this.key]]))
-      .attr('rx', "0.75%");*/
+    if (this.bulkMode) {
+      d3.selectAll(".verticalbar").remove();
 
-    // add new bars
-    rects.enter()
-      .append('rect')
-      .attr("class", "bar")
-      .merge(rects)
-      .attr('x', d => this.x(d[this.xColumn]))
-      .attr('y', d => this.y(0))
-      .attr("width", this.x.bandwidth())
-      .attr('height', 0)
-      .style('fill', this.currParameter["color"])
-      .style("opacity", 0.5)
-      .transition().duration(this.speed)
-      .attr('y', d => this.y(d[this.currParameter[this.key]]))
-      .attr('height', d => this.height - this.y(d[this.currParameter[this.key]]))
-      .attr('rx', "0.75%");
+      let dataMinimize = []
+      for (let i = 0; i < data.length - 1; i += 30) {
+        dataMinimize.push(data[i])
+      }
+      dataMinimize.push(data[data.length - 1]);
+      console.log(dataMinimize)
 
+      data = dataMinimize;
+      this.x.domain(data.map(d => d[this.xColumn]))
+
+    }
+    else {
+      rects.enter()
+        .append('rect')
+        .attr("class", "bar")
+        .merge(rects)
+        .attr('x', d => this.x(d[this.xColumn]))
+        .attr('y', d => this.y(0))
+        .attr("width", this.x.bandwidth())
+        .attr('height', 0)
+        .style('fill', this.currParameter["color"])
+        .style("opacity", 0.5)
+        .transition().duration(this.speed)
+        .attr('y', d => this.y(d[this.currParameter[this.key]]))
+        .attr('height', d => this.height - this.y(d[this.currParameter[this.key]]))
+        .attr('rx', "0.75%");
+    }
     this.svg.selectAll(".x-axis").exit().remove();
     let parseDate = d3.timeFormat("%d %b");
 
-    this.svg.selectAll(".x-axis").transition().duration(this.speed)
-      .call(d3.axisBottom(this.x)
-        //.tickSize(0)
-        .tickSizeOuter(0))
-
-      .selectAll("text")
+    this.svg.selectAll(".x-axis")
+      .transition().duration(this.speed)
+      .call(
+        d3.axisBottom(this.x)
+          //.tickSize(0)
+          .tickSizeOuter(0)
+      ).selectAll("text")
+      //.data(data, d => d[this.xColumn])
       .attr("y", "-5")
       .attr("x", "-10")
       .attr("font-size", "13px")
@@ -319,36 +311,14 @@ export class BarChartComponent implements OnInit {
       .attr("transform", "rotate(-90)")
       //.attr("fill", this.currParameter["color"])
       .text(d => { let t = parseDate(new Date(d)); return t[0] == 0 ? t.slice(1) : t });
-    ;
 
-    /*
-    
-        // Update Y Axis
-        this.svg.selectAll(".y-axis").transition().duration(this.speed)
-          .call(d3.axisLeft(this.y)
-            .ticks(10))
-          .attr("font-size", "14px");
-    
-        // Update the Y gridlines
-        this.svg.selectAll(".y-axis-grid").transition().duration(this.speed)
-          .call(d3.axisLeft(this.y)
-            .ticks(10)
-            .tickSize(-this.width + this.margin.left + this.margin.right - 10)
-            .tickFormat("")
-          );
-    
-        // Update X Axis 
-        this.svg.selectAll(".x-axis").transition().duration(this.speed)
-          .call(d3.axisBottom(this.x).tickSizeOuter(0)).selectAll("text")
-          .attr("y", "3")
-          .attr("x", "-5")
-          .attr("font-size", "14px")
-          .attr("text-anchor", "end")
-          .attr("transform", "rotate(-55)");
-    */
+    this.x.domain(xDomain);
+
+
     // Text above each bar  
     let text = this.g1.selectAll(".text")
-      .data(data, d => d[this.xColumn]);
+      .data(data, d => d[this.xColumn])
+      .attr("fill", this.currParameter["color"]);
 
     text.exit().remove();
 
@@ -362,10 +332,27 @@ export class BarChartComponent implements OnInit {
       .attr("transform", (d) => {
         return ("translate(" + this.x(d[this.xColumn]) + "," + this.y(d[this.currParameter[this.key]]) + ")rotate(-90)")
       })
+      .attr("fill", this.currParameter["color"])
+
       .attr("y", this.x.bandwidth() / 2 + 3)
       .attr("x", 30)
-      .attr("fill", this.currParameter["color"])
       .text(d => d[this.currParameter[this.key]].toLocaleString());
+
+    this.svg.selectAll("circle")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot1")
+
+    let dots = this.svg.selectAll("circle").data(data);
+    dots.exit().remove();
+    dots.style('fill', this.currParameter["color"])
+      .style('opacity', 0.9)
+      //.attr("cy", d => this.y1(0))
+      .transition().duration(this.speed)
+      .attr("cx", d => this.x(d[this.xColumn]) + this.x.bandwidth() / 2)
+      .attr("cy", d => this.y(d[this.currParameter[this.key]]))
+      .attr("r", 3.5);
+
   }
 
   updateLine() {
@@ -401,19 +388,32 @@ export class BarChartComponent implements OnInit {
       .attr("d", line);
 
     const tip = this.tip;
-    this.svg.selectAll("circle")
-      .data(data)
-      .enter().append("circle")
-      .attr("class", "dot1")
+    var area = d3.area()
+      .x(d => this.x(d[this.xColumn]) + this.x.bandwidth() / 2) // set the x values for the line generator
+      .y0(this.height - this.margin.bottom)
+      .y1(d => this.y(d[this.currParameter[this.key]])) // set the y values for the line generator 
+      .curve(d3.curveMonotoneX)
 
-    let dots = this.svg.selectAll("circle").data(data);
-    dots.exit().remove();
-    dots.style('fill', this.currParameter["color"])
-      .style('opacity', 0.9)
-      //.attr("cy", d => this.y1(0))
-      .transition().duration(this.speed)
-      .attr("cx", d => this.x(d[this.xColumn]) + this.x.bandwidth() / 2)
-      .attr("cy", d => this.y(d[this.currParameter[this.key]]))
-      .attr("r", 3.5);
+    let pathArea = this.svg.append("path")
+      .attr("class", "area")
+      .attr("fill", "none");
+
+    pathArea = this.svg.selectAll("path").datum(data)
+    pathArea.exit().remove()
+
+    if (this.bulkMode) {
+      this.svg.select(".area")
+        .style("opacity", 0.4)
+        .attr("fill", "white")
+        .transition().duration(this.speed)
+        .attr("d", area)
+        .attr("fill", this.currParameter["color"]);
+    }
+    else {
+      d3.selectAll(".area").remove();
+
+    }
+
   }
+
 }

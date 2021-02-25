@@ -8,6 +8,7 @@ export class NetworkService {
   private networkConnectivity: boolean;
   private networkConnectivityObservable = new Subject<any>();
   private refreshObservable = new Subject<any>();
+  private loadStaticDataObservable = new Subject<boolean>();
 
   constructor() {
     this.networkConnectivity = true;
@@ -22,6 +23,18 @@ export class NetworkService {
     //if ((this.networkConnectivity && networkConnectivity )||(!this.networkConnectivity && !networkConnectivity )) return;
     this.networkConnectivity = networkConnectivity;
     this.networkConnectivityObservable.next(this.networkConnectivity);
+  }
+
+  loadStaticDataListener() {
+    return this.loadStaticDataObservable.asObservable();
+  }
+
+  loadStaticData(bool) {
+    this.loadStaticDataObservable.next(true);
+  }
+
+  getNetworkConnectivityStatus() {
+    return this.networkConnectivity;
   }
 
   doRefresh() {

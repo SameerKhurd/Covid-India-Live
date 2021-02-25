@@ -14,9 +14,9 @@
   <br>
   Showing data as of -
   <strong>
-    {{date.toLocaleDateString('en-GB', {  
-  month : 'short',
-  day : 'numeric'})}}, {{date.toLocaleTimeString()}}
+    {{date.toLocaleDateString('en-GB', {
+    month : 'short',
+    day : 'numeric'})}}, {{date.toLocaleTimeString()}}
   </strong>
   <br>
   Data source - <strong>Covid19india.org</strong>
@@ -26,5 +26,4 @@
 
 <span style="text-align: center;font-size: 15px;display: inline;"> Total
   <strong>{{genericData[confirmedParameter.totalKey].toLocaleString()}}</strong> cases </span>
-
 <div #piechart id="piechart"></div>

@@ -65,7 +65,10 @@ export class PieChartComponent implements OnInit {
 
       }
     });
-    this.date = new Date(this.genericData["updated"]); // The 0 there is the key, which sets the date to the epoch
+    let date = this.genericData["updated"].split(" ");
+    date = [date[0].split("/"), date[1]];
+    this.date = new Date(date[0][2] + "-" + date[0][1] + "-" + date[0][0] + " " + date[1]); // The 0 there is the key, which sets the date to the epoch
+    //this.date = 
     //this.date.setUTCSeconds();
 
     this.currMap = this.dataService.getCurrMapDetail()
@@ -83,7 +86,7 @@ export class PieChartComponent implements OnInit {
       .append('svg')
       .attr("id", this.dataService.name() + "pc")
       .attr('width', this.platform.width())// +200+ this.margin.left + this.margin.right)
-      .attr('height', this.height + 20)
+      .attr('height', this.height + 30)
       .attr('preserveAspectRatio', "xMinYMax meet")
     //.attr('transform', `translate(${300}, ${300})`)
 
@@ -95,9 +98,9 @@ export class PieChartComponent implements OnInit {
 
 
     this.g1 = this.svg.append('g')
-      .attr('transform', `translate(${this.platform.width() / 2 - 10}, ${(this.height + 20) * 0.8})`)
+      .attr('transform', `translate(${this.platform.width() / 2 - 10}, ${(this.height + 30) * 0.8})`)
     this.g2 = this.svg.append('g')
-      .attr('transform', `translate(${this.platform.width() / 2 - 10}, ${(this.height + 20) * 0.8})`)
+      .attr('transform', `translate(${this.platform.width() / 2 - 10}, ${(this.height + 30) * 0.8})`)
 
 
 

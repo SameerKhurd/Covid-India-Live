@@ -12,14 +12,6 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-// GraphlQL - ng add apollo-angular
-import { GraphQLModule } from './graphql.module';
-import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
-
-// sudo npm install @types/d3
-
 // Services
 import { StateDataService } from './services/state-data.service'
 import { CountryDataService } from './services/country-data.service';
@@ -50,7 +42,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
-    GraphQLModule,
     HttpClientModule,
     CommonModule,
     FormsModule,
@@ -66,18 +57,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     StateDataService,
     CountryDataService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: (httpLink: HttpLink) => {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: "https://covidstat.info/graphql"
-          })
-        }
-      },
-      deps: [HttpLink]
-    },
+
   ],
   bootstrap: [AppComponent]
 })

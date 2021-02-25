@@ -22,11 +22,11 @@
         <ion-row *ngIf="showNetworkElement" class="ion-no-padding">
           <ion-col size="12" class="ion-no-padding">
             <div *ngIf="networkConnectivity"
-              style="text-align:center;background-color: #219c09;padding: 5px;color:white;font-size: 14px;">
+              style="text-align:center;background-color: #88e013;padding: 5px;color:rgb(22, 95, 4);font-size: 14px; border-radius: 2px;">
               Connected
             </div>
             <div *ngIf="!networkConnectivity"
-              style="text-align: center; background-color: #f34d4d;padding: 5px;color:white;font-size: 14px;">
+              style="text-align: center; background-color: #f34d4d;padding: 5px;color:white;font-size: 14px;border-radius: 2px;">
               <div *ngIf="!retry">
                 <ion-text>
                   Unable to Connect
@@ -91,6 +91,16 @@
   </ion-split-pane-->
 
   <ion-content [fullscreen]="true">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="analytics"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="stats-chart"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <ion-slides #slide (ionSlideDidChange)="onSlideChange(slide)">
 
       <ion-slide>
