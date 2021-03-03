@@ -145,7 +145,6 @@ export class MapComponent implements OnInit {
       .attr("class", "country").attr("d", path)
 
     let maxValue = this.getMaxValue();
-
     this.map.attr("fill", "white")
       .attr("stroke-width", "1px")
       .attr("stroke", "#660000")

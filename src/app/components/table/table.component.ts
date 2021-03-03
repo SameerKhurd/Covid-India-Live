@@ -8,8 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TableComponent implements OnInit {
   @Input() public dataService: any;
   public dataParameters: any;
-  public tableParameters: any;
+  //public tableParameters: any;
   public mainParameter: any;
+
+  public categories: any;
+  public currCategoryIndex: number;
 
   public regionWiseData: any;
 
@@ -22,13 +25,14 @@ export class TableComponent implements OnInit {
     console.log("[Table : Init]")
     this.mainParameter = this.dataService.getMainParameter();
     this.dataParameters = this.dataService.getDataParameters();
-    this.tableParameters = this.dataParameters.filter(d => d.tableDisplay);
+    this.createCategories();
+    /*this.tableParameters = this.dataParameters.filter(d => d.tableDisplay);
 
     for (let parameter of this.tableParameters) {
       let c = parameter.color.substring(1).split('');
       c = '0x' + c.join('');
       parameter["backgroundColor"] = 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',0.2)';
-    };
+    };*/
 
     this.dataService.getDataListener().subscribe(data => {
       this.onDataRecevied(data);
@@ -36,11 +40,53 @@ export class TableComponent implements OnInit {
     this.onDataRecevied(this.dataService.getProcessedData());
   }
 
+  createCategories() {
+    this.categories = [
+      {
+        name: "Overall",
+        sortKeyName: "totalKey",
+        showToday: true,
+        tableParameters: this.dataParameters.filter(d => d.category == "General")
+      },
+      {
+        name: "Today's",
+        sortKeyName: "todayKey",
+        showToday: false,
+        tableParameters: this.dataParameters.filter(d => d.cardDisplay)
+      },
+      {
+        name: "Percentage-wise",
+        sortKeyName: "totalKey",
+        showToday: false,
+        tableParameters: this.dataParameters.filter(d => d.category == "Percentage")
+      },
+    ]
+    this.currCategoryIndex = 0;
+
+    for (let category of this.categories) {
+      for (let parameter of category.tableParameters) {
+        let c = parameter.color.substring(1).split('');
+        c = '0x' + c.join('');
+        parameter["backgroundColor"] = 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',0.2)';
+      };
+    }
+  }
+
+  onGranularityChange(currCategoryIndex) {
+    this.currCategoryIndex = currCategoryIndex;
+    this.resetParameters();
+  }
+
   onDataRecevied(data) {
     if (!data) return;
+    this.currCategoryIndex = 0;
     this.regionWiseData = data.regionWiseData;
+    this.resetParameters();
+  }
+
+  resetParameters() {
     this.sortAscending = true;
-    this.sortKey = this.tableParameters[0].totalKey;
+    this.sortKey = this.categories[this.currCategoryIndex].tableParameters[0][this.categories[this.currCategoryIndex].sortKeyName];
     this.sortData();
   }
 

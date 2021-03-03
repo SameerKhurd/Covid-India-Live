@@ -90,11 +90,11 @@ export class StateDataService extends MainDataService {
 
   processData() {
     let stateGQLData = this.getAllData().get(this.getCurrMapDetail().name);
-    let stateDistrictData = this.addRecoveryDeathRate(stateGQLData["districts"]);
+    //let stateDistrictData = this.addRecoveryDeathRate(stateGQLData["districts"]);
 
     let stateData = {
       genericData: stateGQLData["generic"],
-      regionWiseData: stateDistrictData,
+      regionWiseData: stateGQLData["districts"],
       timeWiseData: stateGQLData["historical"]
     }
     console.log(stateData)
@@ -182,6 +182,25 @@ export class StateDataService extends MainDataService {
       d["todayCases"] = Math.abs(Number(d["Delta_Confirmed"]))
       d["todayDeaths"] = Math.abs(Number(d["Delta_Deceased"]))
       d["todayRecovered"] = Math.abs(Number(d["Delta_Recovered"]))
+      d["activeRate"] = (d["active"] / (d["cases"] || 1) * 100).toFixed(2);
+      d["recoveryRate"] = (d["recovered"] / (d["cases"] || 1) * 100).toFixed(2);
+      d["deathRate"] = (d["deaths"] / (d["cases"] || 1) * 100).toFixed(2);
+
+      delete d["District"]
+      delete d["Confirmed"]
+      delete d["Deceased"]
+      delete d["Active"]
+      delete d["Recovered"]
+      delete d["Delta_Confirmed"]
+      delete d["Delta_Active"]
+      delete d["Delta_Deceased"]
+      delete d["Delta_Recovered"]
+      delete d["District_Key"]
+      delete d["District_Notes"]
+      delete d["Last_Updated"]
+      delete d["State_Code"]
+      delete d["SlNo"]
+      //delete d["Last_Updated_Time"]
       allStatesDataMap.get(d.State).districts.push(d);
     }
   }
@@ -230,18 +249,30 @@ export class StateDataService extends MainDataService {
     for (let d of state_wise_json) {
       let stateName = d.State.replace("\n", "")
       if (allStatesDataMap.has(stateName)) {
-        let genericData = {};
-        genericData["state"] = stateName;
-        genericData["cases"] = Math.abs(Number(d["Confirmed"]));
-        genericData["deaths"] = Math.abs(Number(d["Deaths"]));
-        genericData["active"] = Math.abs(Number(d["Active"]));
-        genericData["recovered"] = Math.abs(Number(d["Recovered"]));
-        genericData["tests"] = Math.abs(Number("asdasd"));
-        genericData["todayCases"] = Math.abs(Number(d["Delta_Confirmed"]));
-        genericData["todayDeaths"] = Math.abs(Number(d["Delta_Deaths"]));
-        genericData["todayRecovered"] = Math.abs(Number(d["Delta_Recovered"]));
-        genericData["updated"] = d["Last_Updated_Time"];
-        allStatesDataMap.get(stateName).generic = genericData;
+        d["state"] = stateName;
+        d["cases"] = Math.abs(Number(d["Confirmed"]));
+        d["deaths"] = Math.abs(Number(d["Deaths"]));
+        d["active"] = Math.abs(Number(d["Active"]));
+        d["recovered"] = Math.abs(Number(d["Recovered"]));
+        d["tests"] = Math.abs(Number("na"));
+        d["todayCases"] = Math.abs(Number(d["Delta_Confirmed"]));
+        d["todayDeaths"] = Math.abs(Number(d["Delta_Deaths"]));
+        d["todayRecovered"] = Math.abs(Number(d["Delta_Recovered"]));
+        d["updated"] = d["Last_Updated_Time"];
+
+        delete d["State"]
+        delete d["Confirmed"]
+        delete d["Deaths"]
+        delete d["Active"]
+        delete d["Recovered"]
+        delete d["Delta_Confirmed"]
+        delete d["Delta_Deaths"]
+        delete d["Delta_Recovered"]
+        delete d["State_Notes"]
+        delete d["State_code"]
+        delete d["Migrated_Other"]
+        delete d["Last_Updated_Time"]
+        allStatesDataMap.get(stateName).generic = d;
       }
     }
   }

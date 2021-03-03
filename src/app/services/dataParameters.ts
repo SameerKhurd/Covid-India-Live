@@ -6,6 +6,7 @@ export const DATA_PARAMETERS = [
         tableDisplay: true,
         pieChartDisplay: false,
         percent: false,
+        category: "General",
 
         id: "C",
         name: "Confirmed",
@@ -22,6 +23,7 @@ export const DATA_PARAMETERS = [
         tableDisplay: true,
         pieChartDisplay: true,
         percent: false,
+        category: "General",
 
         id: "A",
         name: "Active",
@@ -36,6 +38,7 @@ export const DATA_PARAMETERS = [
         tableDisplay: true,
         pieChartDisplay: true,
         percent: false,
+        category: "General",
 
         id: "R",
         name: "Recovered",
@@ -52,6 +55,7 @@ export const DATA_PARAMETERS = [
         tableDisplay: true,
         pieChartDisplay: true,
         percent: false,
+        category: "General",
 
         id: "D",
         name: "Deaths",
@@ -62,16 +66,32 @@ export const DATA_PARAMETERS = [
         interpolateColor: "interpolateGreys"
     },
     {
+        // Active Rate
+        cardDisplay: false,
+        mapDisplay: true,
+        tableDisplay: false,
+        pieChartDisplay: false,
+        percent: true,
+        category: "Percentage",
+
+        id: "AR",
+        name: "Active Rate",
+        color: "#FF4500",
+        totalKey: "activeRate",
+        interpolateColor: "interpolateOranges"
+    },
+    {
         // Recovery Rate
         cardDisplay: false,
         mapDisplay: true,
         tableDisplay: false,
         pieChartDisplay: false,
         percent: true,
+        category: "Percentage",
 
         id: "RR",
         name: "Recovery Rate",
-        color: "darkgreen",
+        color: "#006400",
         totalKey: "recoveryRate",
         interpolateColor: "interpolateGreens"
     },
@@ -82,10 +102,11 @@ export const DATA_PARAMETERS = [
         tableDisplay: false,
         pieChartDisplay: false,
         percent: true,
+        category: "Percentage",
 
         id: "DR",
         name: "Death Rate",
-        color: "black",
+        color: "#000000",
         totalKey: "deathRate",
         interpolateColor: "interpolateGreys"
     },
@@ -96,6 +117,7 @@ export const DATA_PARAMETERS = [
         tableDisplay: false,
         pieChartDisplay: false,
         percent: false,
+        category: "NA",
 
         id: "T",
         name: "Testing",

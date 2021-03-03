@@ -134,6 +134,15 @@ export class CountryDataService extends MainDataService {
       d["todayCases"] = Math.abs(Number(d["Daily Confirmed"]));
       d["todayDeaths"] = Math.abs(Number(d["Daily Deceased"]));
       d["todayRecovered"] = Math.abs(Number(d["Daily Recovered"]));
+
+      delete d["Date"]
+      delete d["Date_YMD"]
+      delete d["Total Confirmed"]
+      delete d["Total Deceased"]
+      delete d["Total Recovered"]
+      delete d["Daily Confirmed"]
+      delete d["Daily Deceased"]
+      delete d["Daily Recovered"]
     }
     this.getAllData().timeWiseData = case_time_series_json;
   }
@@ -153,18 +162,34 @@ export class CountryDataService extends MainDataService {
   }
 
   private getGenericJson(region) {
-    let genericData = {};
-    genericData["state"] = region["State"];
-    genericData["cases"] = Math.abs(Number(region["Confirmed"]));
-    genericData["deaths"] = Math.abs(Number(region["Deaths"]));
-    genericData["active"] = Math.abs(Number(region["Active"]));
-    genericData["recovered"] = Math.abs(Number(region["Recovered"]));
-    genericData["tests"] = Math.abs(Number("asdasd"));
-    genericData["todayCases"] = Math.abs(Number(region["Delta_Confirmed"]));
-    genericData["todayDeaths"] = Math.abs(Number(region["Delta_Deaths"]));
-    genericData["todayRecovered"] = Math.abs(Number(region["Delta_Recovered"]));
-    genericData["updated"] = region["Last_Updated_Time"];
-    return genericData;
+    region["state"] = region["State"];
+    region["cases"] = Math.abs(Number(region["Confirmed"]));
+    region["deaths"] = Math.abs(Number(region["Deaths"]));
+    region["active"] = Math.abs(Number(region["Active"]));
+    region["recovered"] = Math.abs(Number(region["Recovered"]));
+    region["tests"] = Math.abs(Number("na"));
+    region["todayCases"] = Math.abs(Number(region["Delta_Confirmed"]));
+    region["todayDeaths"] = Math.abs(Number(region["Delta_Deaths"]));
+    region["todayRecovered"] = Math.abs(Number(region["Delta_Recovered"]));
+    region["activeRate"] = (region["active"] / (region["cases"] || 1) * 100).toFixed(2);
+    region["recoveryRate"] = (region["recovered"] / (region["cases"] || 1) * 100).toFixed(2);
+    region["deathRate"] = (region["deaths"] / (region["cases"] || 1) * 100).toFixed(2);
+    region["updated"] = region["Last_Updated_Time"];
+
+    delete region["State"]
+    delete region["Confirmed"]
+    delete region["Deaths"]
+    delete region["Active"]
+    delete region["Recovered"]
+    delete region["Delta_Confirmed"]
+    delete region["Delta_Deaths"]
+    delete region["Delta_Recovered"]
+    delete region["State_Notes"]
+    delete region["State_code"]
+    delete region["Migrated_Other"]
+    delete region["Last_Updated_Time"]
+
+    return region;
   }
   /*getGQLQuery() {
     return `{

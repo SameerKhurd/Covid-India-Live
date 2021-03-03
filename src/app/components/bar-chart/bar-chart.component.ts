@@ -255,24 +255,23 @@ export class BarChartComponent implements OnInit {
 
     // add new bars
     let rects = this.g1.selectAll('rect')
-      .attr("class", "verticalbar")
+      .attr("class", this.dataService.name() + "_verticalbar")
       .data(data);
 
     // remove exiting bars
     rects.exit().remove();
 
     if (this.bulkMode) {
-      d3.selectAll(".verticalbar").remove();
+      d3.selectAll("." + this.dataService.name() + "_verticalbar").remove();
 
       let dataMinimize = []
-      for (let i = 0; i < data.length - 1; i += 30) {
+      for (let i = 0; i < data.length - 15; i += 30) {
         dataMinimize.push(data[i])
       }
       dataMinimize.push(data[data.length - 1]);
       console.log(dataMinimize)
 
       data = dataMinimize;
-      this.x.domain(data.map(d => d[this.xColumn]))
 
     }
     else {
@@ -294,12 +293,17 @@ export class BarChartComponent implements OnInit {
     this.svg.selectAll(".x-axis").exit().remove();
     let parseDate = d3.timeFormat("%d %b");
 
+    let validDate = [];
+    for (let d of data) {
+      validDate.push(d[this.xColumn])
+    }
     this.svg.selectAll(".x-axis")
       .transition().duration(this.speed)
       .call(
         d3.axisBottom(this.x)
           //.tickSize(0)
           .tickSizeOuter(0)
+          .tickValues(validDate)
       ).selectAll("text")
       //.data(data, d => d[this.xColumn])
       .attr("y", "-5")
@@ -312,7 +316,6 @@ export class BarChartComponent implements OnInit {
       //.attr("fill", this.currParameter["color"])
       .text(d => { let t = parseDate(new Date(d)); return t[0] == 0 ? t.slice(1) : t });
 
-    this.x.domain(xDomain);
 
 
     // Text above each bar  
@@ -343,6 +346,7 @@ export class BarChartComponent implements OnInit {
       .enter().append("circle")
       .attr("class", "dot1")
 
+    let dotRadius: number = this.bulkMode ? 2.5 : 3.5;
     let dots = this.svg.selectAll("circle").data(data);
     dots.exit().remove();
     dots.style('fill', this.currParameter["color"])
@@ -351,7 +355,7 @@ export class BarChartComponent implements OnInit {
       .transition().duration(this.speed)
       .attr("cx", d => this.x(d[this.xColumn]) + this.x.bandwidth() / 2)
       .attr("cy", d => this.y(d[this.currParameter[this.key]]))
-      .attr("r", 3.5);
+      .attr("r", dotRadius);
 
   }
 
@@ -374,6 +378,7 @@ export class BarChartComponent implements OnInit {
       .y(d => this.y(d[this.currParameter[this.key]]))
       .curve(d3.curveMonotoneX);
 
+    let lineWidth: string = this.bulkMode ? "0.75px" : "0.5px";
     let path = this.svg.append("path")
       .attr("class", "line")
       .attr("fill", "none")
@@ -381,9 +386,8 @@ export class BarChartComponent implements OnInit {
     path.exit().remove()
     this.svg.select(".line")
       .style('opacity', 0.7)
-      .attr("stroke-width", "0.5px")
+      .attr("stroke-width", lineWidth)
       .attr("stroke", this.currParameter["color"])
-
       .transition().duration(this.speed)
       .attr("d", line);
 
@@ -395,22 +399,22 @@ export class BarChartComponent implements OnInit {
       .curve(d3.curveMonotoneX)
 
     let pathArea = this.svg.append("path")
-      .attr("class", "area")
+      .attr("class", this.dataService.name() + "_area")
       .attr("fill", "none");
 
     pathArea = this.svg.selectAll("path").datum(data)
     pathArea.exit().remove()
 
     if (this.bulkMode) {
-      this.svg.select(".area")
-        .style("opacity", 0.4)
+      this.svg.select("." + this.dataService.name() + "_area")
+        .style("opacity", 0.3)
         .attr("fill", "white")
         .transition().duration(this.speed)
         .attr("d", area)
         .attr("fill", this.currParameter["color"]);
     }
     else {
-      d3.selectAll(".area").remove();
+      d3.selectAll("." + this.dataService.name() + "_area").remove();
 
     }
 
