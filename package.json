@@ -5,17 +5,20 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.6",
     "@angular/cdk": "^9.2.4",
+    "@angular/cli": "~9.1.5",
     "@angular/common": "~9.1.6",
+    "@angular/compiler-cli": "~9.1.6",
     "@angular/core": "~9.1.6",
     "@angular/forms": "~9.1.6",
     "@angular/material": "^9.2.4",
@@ -32,9 +35,12 @@
     "@ionic/storage": "^2.2.0",
     "cordova-plugin-network-information": "^2.0.2",
     "d3": "^5.16.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
     "rxjs": "~6.5.1",
     "topojson": "^3.0.2",
     "tslib": "^1.10.0",
+    "typescript": "~3.8.3",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -59,6 +65,10 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
+  },
+  "engines": {
+    "node": "10.19.0",
+    "npm": "6.14.4"
   },
   "description": "An Ionic project"
 }
