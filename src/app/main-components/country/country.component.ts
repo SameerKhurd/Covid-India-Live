@@ -21,7 +21,7 @@ export class CountryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("[Country Main : Init]")
+    //console.log("[Country Main : Init]")
     this.showProgressBar = true;
     this.progressBarType = "indeterminate"
     this.currCountry = this.countryDataService.getCurrMapDetail()
@@ -70,7 +70,7 @@ export class CountryComponent implements OnInit {
   doRefresh(event) {
     this.networkService.doRefresh();
     setTimeout(() => {
-      console.log('Async operation has ended');
+      //console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }

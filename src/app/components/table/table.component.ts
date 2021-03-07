@@ -22,7 +22,7 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("[Table : Init]")
+    //console.log("[Table : Init]")
     this.mainParameter = this.dataService.getMainParameter();
     this.dataParameters = this.dataService.getDataParameters();
     this.createCategories();

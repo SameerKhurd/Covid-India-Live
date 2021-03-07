@@ -38,7 +38,7 @@ export class PieChartComponent implements OnInit {
   constructor(private platform: Platform) { }
 
   ngOnInit() {
-    console.log("[Pie-Chart : Init]");
+    //console.log("[Pie-Chart : Init]");
 
     this.dataParameters = this.dataService.getDataParameters();
     this.genericParameters = this.dataParameters.filter(d => !d.percent);

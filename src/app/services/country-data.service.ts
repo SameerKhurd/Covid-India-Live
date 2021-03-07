@@ -16,7 +16,7 @@ export class CountryDataService extends MainDataService {
   constructor(private http: HttpClient, storage: Storage, private networkService: NetworkService) {
     super(storage);
 
-    console.log("[Country Data Service : Constructor]")
+    //console.log("[Country Data Service : Constructor]")
     this.initialize();
     /*this.countryName = "India";
     this.homeState =
@@ -41,7 +41,7 @@ export class CountryDataService extends MainDataService {
   }
 
   getDataFromServer() {
-    console.log("[Country Data Service : getDataFromServer]")
+    //console.log("[Country Data Service : getDataFromServer]")
     this.setLoading(true);
     this.setAllData({
       genericData: {},
@@ -56,12 +56,12 @@ export class CountryDataService extends MainDataService {
   }
 
   processData() {
-    console.log(this.getAllData())
+    //console.log(this.getAllData())
     this.setProcessedData(this.getAllData())
   }
 
   loadStaticData() {
-    console.log("[Country Data Service : loadStaticData]")
+    //console.log("[Country Data Service : loadStaticData]")
     this.setLoading(true);
     this.setAllData({
       genericData: {},
@@ -105,18 +105,18 @@ export class CountryDataService extends MainDataService {
         this.getRegionWiseData(this.convertCsvStringToJson(state_wise_response));
 
         this.storeDataOnLocalStorage();
-        console.log('[' + this.name() + ' : ' + call_info + ' ' + this.id() + ' Data] :', this.getAllData());
+        //console.log('[' + this.name() + ' : ' + call_info + ' ' + this.id() + ' Data] :', this.getAllData());
 
         this.processData();
         this.updateData();
       },
         state_wise_error => {
-          console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 2 state_wise_error] :', state_wise_error);
+          //console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 2 state_wise_error] :', state_wise_error);
           //this.networkService.setNetworkConnectivity(false);
         }, () => { });
     },
       case_time_series_error => {
-        console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 1 case_time_series_error] :', case_time_series_error);
+        //console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 1 case_time_series_error] :', case_time_series_error);
         //this.networkService.setNetworkConnectivity(false);
       }, () => { });
   }

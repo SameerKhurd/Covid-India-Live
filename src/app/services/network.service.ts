@@ -19,7 +19,7 @@ export class NetworkService {
   }
 
   setNetworkConnectivity(networkConnectivity) {
-    console.log("[Network Service : Status Prev, After]", this.networkConnectivity, networkConnectivity)
+    //console.log("[Network Service : Status Prev, After]", this.networkConnectivity, networkConnectivity)
     //if ((this.networkConnectivity && networkConnectivity )||(!this.networkConnectivity && !networkConnectivity )) return;
     this.networkConnectivity = networkConnectivity;
     this.networkConnectivityObservable.next(this.networkConnectivity);

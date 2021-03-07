@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
     }
 
     this.networkService.getNetworkConnectivityListener().subscribe(networkConnectivity => {
-      console.log("[App : Network Status Update]", networkConnectivity);
+      //console.log("[App : Network Status Update]", networkConnectivity);
       this.networkConnectivity = networkConnectivity;
       if (this.networkConnectivity) {
         setTimeout(() => {

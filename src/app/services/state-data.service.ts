@@ -16,7 +16,7 @@ export class StateDataService extends MainDataService {
   constructor(private http: HttpClient, storage: Storage, private networkService: NetworkService) {
     super(storage);
 
-    console.log("[State Data Service : Constructor]")
+    //console.log("[State Data Service : Constructor]")
     this.initialize();
     /*this.countryName = "India";
     this.homeState =
@@ -77,7 +77,7 @@ export class StateDataService extends MainDataService {
   }
 
   getDataFromServer() {
-    console.log("[State Data Service : getDataFromServer]")
+    //console.log("[State Data Service : getDataFromServer]")
     this.setLoading(true);
     this.setAllData(new Map<String, any>())
     let urls = {
@@ -97,12 +97,12 @@ export class StateDataService extends MainDataService {
       regionWiseData: stateGQLData["districts"],
       timeWiseData: stateGQLData["historical"]
     }
-    console.log(stateData)
+    //console.log(stateData)
     this.setProcessedData(stateData)
   }
 
   loadStaticData() {
-    console.log("[State Data Service : loadStaticData]")
+    //console.log("[State Data Service : loadStaticData]")
     this.setLoading(true);
     this.setAllData(new Map<String, any>())
     let staticDataDirPath = "assets/static_data/";
@@ -146,23 +146,23 @@ export class StateDataService extends MainDataService {
           this.getAllStatesGenericData(this.convertCsvStringToJson(state_wise_response));
 
           this.storeDataOnLocalStorage();
-          console.log('[' + this.name() + ' : ' + call_info + ' ' + this.id() + ' Data] :', this.getAllData());
+          //console.log('[' + this.name() + ' : ' + call_info + ' ' + this.id() + ' Data] :', this.getAllData());
 
           this.processData();
           this.updateData();
         },
           state_wise_error => {
-            console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 3 state_wise_error] :', state_wise_error);
+            //console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 3 state_wise_error] :', state_wise_error);
             this.networkService.setNetworkConnectivity(false);
           }, () => { });
       },
         state_wise_daily_error => {
-          console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 2 state_wise_daily_error] :', state_wise_daily_error);
+          //console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 2 state_wise_daily_error] :', state_wise_daily_error);
           this.networkService.setNetworkConnectivity(false);
         }, () => { });
     },
       district_wise_error => {
-        console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 1 district_wise_error] :', district_wise_error);
+        //console.log('[' + this.name() + ' : ERROR ' + call_info + ' ' + this.id() + ' Data Server : 1 district_wise_error] :', district_wise_error);
         this.networkService.setNetworkConnectivity(false);
       }, () => { });
   }

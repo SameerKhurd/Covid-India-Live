@@ -24,7 +24,7 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("[Card : Init]")
+    //console.log("[Card : Init]")
     /* let date: Date = new Date();  
      console.log("Date = " + date); //Date = Tue Feb 05 2019 12:05:22 GMT+0530 (IST)  
      console.log("Date = " + date.getDate()); //Date = Tue Feb 05 2019 12:05:22 GMT+0530 (IST)  

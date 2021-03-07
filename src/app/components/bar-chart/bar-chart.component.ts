@@ -58,7 +58,7 @@ export class BarChartComponent implements OnInit {
   constructor(private platform: Platform) { }
 
   ngOnInit() {
-    console.log("[Bar-Chart : Init]")
+    //"[Bar-Chart : Init]")
     this.granularities = [
       { name: "  All  ", slice: 0, value: "1+ year" },
       { name: "6 Months", slice: 180, value: "6 Months" },
@@ -269,7 +269,7 @@ export class BarChartComponent implements OnInit {
         dataMinimize.push(data[i])
       }
       dataMinimize.push(data[data.length - 1]);
-      console.log(dataMinimize)
+      //console.log(dataMinimize)
 
       data = dataMinimize;
 

@@ -24,7 +24,7 @@ export abstract class MainDataService {
   private allData: any;
 
   constructor(private storage: Storage) {
-    console.log('[' + this.name() + ' : Super Constructor]');
+    //console.log('[' + this.name() + ' : Super Constructor]');
   }
 
   // Abstract Method Declarations ---------------------------------------------  
@@ -91,13 +91,13 @@ export abstract class MainDataService {
           return;
         }
 
-        console.log('[' + this.name() + ' : Stored ' + this.id() + ' Data] :', this.currMap, result);
+        //console.log('[' + this.name() + ' : Stored ' + this.id() + ' Data] :', this.currMap, result);
         this.allData = result;
         this.processData();
         this.updateData();
         this.getDataFromServer();
       }).catch((ex) => {
-        console.log('[' + this.name() + ' : ERROR Stored ' + this.id() + ' Data] :', ex)
+        //console.log('[' + this.name() + ' : ERROR Stored ' + this.id() + ' Data] :', ex)
         this.getDataFromServer();
       });
     })

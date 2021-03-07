@@ -48,7 +48,7 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("[Map : Init]");
+    //console.log("[Map : Init]");
     this.fileExt = ".json";
     this.mapDirPath = "assets/maps/";
 
@@ -91,7 +91,7 @@ export class MapComponent implements OnInit {
   }
 
   getMap() {
-    console.log("[Map : Get Map]", this.mapDetail)
+    //console.log("[Map : Get Map]", this.mapDetail)
     clearInterval(this.timerEvent);
     this.http.get(this.mapDirPath + this.mapDetail.mapName + this.fileExt).subscribe(responseData => {
       //this.mapName = this.mapName.replace(" ", "_");
@@ -105,7 +105,7 @@ export class MapComponent implements OnInit {
   }
 
   createMap() {
-    console.log("[Map : Create Map]", this.mapDetail)
+    //console.log("[Map : Create Map]", this.mapDetail)
     clearInterval(this.timerEvent);
 
     let element = this.chartContainer.nativeElement;
@@ -187,7 +187,7 @@ export class MapComponent implements OnInit {
     addMapLabels(bo);
 
     this.timerEvent = setInterval(() => {
-      console.log("[Map : Timer Triggered] :", this.mapDetail.mapName);
+      //console.log("[Map : Timer Triggered] :", this.mapDetail.mapName);
       d3.selectAll(".map-labels" + this.dataService.name()).remove();
       bo = !bo
       addMapLabels(bo);

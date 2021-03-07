@@ -60,7 +60,7 @@ export class StateComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.generalText = "loading"
-    console.log("[State Main : Init]");
+    //console.log("[State Main : Init]");
     this.showProgressBar = true;
     this.progressBarType = "indeterminate"
     this.stateMaps = this.stateDataService.getMaps();
@@ -120,7 +120,7 @@ export class StateComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log("[State Main : AFETRInit]")
+    //console.log("[State Main : AFETRInit]")
     this.showProgressBar = true;
     //this.stateDataService.getData();
   }
@@ -128,7 +128,7 @@ export class StateComponent implements OnInit, AfterViewInit {
   onStateSelect() {
     this.showProgressBar = true;
     this.loading = true;
-    console.log("[State Main  : State Changed]", this.currState);
+    //console.log("[State Main  : State Changed]", this.currState);
     this.stateDataService.setCurrMap(this.currState);
     this.stateDataService.getData();
   }
@@ -136,7 +136,7 @@ export class StateComponent implements OnInit, AfterViewInit {
   doRefresh(event) {
     this.networkService.doRefresh();
     setTimeout(() => {
-      console.log('Async operation has ended');
+      //console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
   }
@@ -157,13 +157,13 @@ export class StateComponent implements OnInit, AfterViewInit {
           icon: 'star',
           text: 'Favorite',
           handler: () => {
-            console.log('Favorite clicked');
+            //console.log('Favorite clicked');
           }
         }, {
           text: 'Done',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+           // console.log('Cancel clicked');
           }
         }
       ]
