@@ -31,20 +31,38 @@
     </ion-icon>
   </small>
 
-  <div *ngIf="!genericData" style="font-size: medium;color: #555555;margin-top: 50%;">
+  <div *ngIf="!genericData" style="font-size: medium;color: #555555;margin: 10%; font-size: small; margin-top: 15%;">
     <ion-spinner *ngIf="loading"></ion-spinner>
     <div *ngIf="!loading">
-      <strong>Unable to connect</strong>
-      <br>
-      Make sure you have an active
-      <br>
-      Internet Connection
+      <strong>
+        We are temporarily stopping this service to avoid any false data spread
+      </strong>
       <br>
       <br>
+      We do not verify the authenticity and integrity of the data.
+      <br>
+      The data shown may not be valid.
+      <br>
+      So in this tough time of covid, to avoid any false impression we are stopping this service.
+      <br>
+      Sorry for the inconvenience.
       <br>
       <br>
+      <ion-icon name="fitness-outline"></ion-icon>
+      <br>
+      <span >
+        Stay safe <span style="padding: 0px 10px;"> Wear mask </span> Take care
+      </span>
+      <br>
+      <ion-icon name="thumbs-up-outline"></ion-icon>
+      <br>
+      <br>
+      <br>
+      <small>
+        To check the functionalities and features of the app you can load the data prior to the second wave of covid.
+      </small>
       <ion-chip (click)="showStaticData()">
-        <ion-label>Tap to show static data instead</ion-label>
+        <ion-label>Tap to show previous data instead</ion-label>
       </ion-chip>
     </div>
   </div>

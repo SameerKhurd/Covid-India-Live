@@ -38,6 +38,10 @@ export abstract class MainDataService {
   public getData() {
     //this.getDataFromLocalStorage();
     //this.getDataFromServer();
+    if(this.allData==undefined){
+      this.getDataFromServer();
+      return;
+    }
     this.processData();
     this.updateData();
   }
@@ -78,6 +82,8 @@ export abstract class MainDataService {
   }
 
   protected getDataFromLocalStorage() {
+    this.getDataFromServer();
+    return;
     this.storage.get(this.id() + '-map-json').then((resultMap) => {
       if (!resultMap) {
         this.getDataFromServer();

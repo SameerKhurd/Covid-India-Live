@@ -26,7 +26,8 @@ export class StateDataService extends MainDataService {
       });
     //this.getStoredStateData();
     this.getStateDataFromServer();*/
-    this.getDataFromLocalStorage();
+    //this.getDataFromServer();
+    //this.getDataFromLocalStorage();
     //this.loadStaticData();
   }
 
@@ -78,20 +79,21 @@ export class StateDataService extends MainDataService {
 
   getDataFromServer() {
     //console.log("[State Data Service : getDataFromServer]")
-    this.setLoading(true);
+    /* this.setLoading(true);
     this.setAllData(new Map<String, any>())
     let urls = {
       district_wise: "https://api.covid19india.org/csv/latest/district_wise.csv",
       state_wise_daily: "https://api.covid19india.org/csv/latest/state_wise_daily.csv",
       state_wise: "https://api.covid19india.org/csv/latest/state_wise.csv"
     }
-    this.makeApiCalls(urls, "FromServer", true);
+    this.makeApiCalls(urls, "FromServer", true); */
+    this.networkService.setNetworkConnectivity(false);
   }
 
   processData() {
     let stateGQLData = this.getAllData().get(this.getCurrMapDetail().name);
     //let stateDistrictData = this.addRecoveryDeathRate(stateGQLData["districts"]);
-
+    
     let stateData = {
       genericData: stateGQLData["generic"],
       regionWiseData: stateGQLData["districts"],
@@ -183,8 +185,8 @@ export class StateDataService extends MainDataService {
       d["todayDeaths"] = Math.abs(Number(d["Delta_Deceased"]))
       d["todayRecovered"] = Math.abs(Number(d["Delta_Recovered"]))
       d["activeRate"] = Math.abs(Number((d["active"] / (d["cases"] || 1) * 100).toFixed(2)));
-      d["recoveryRate"] =  Math.abs(Number((d["recovered"] / (d["cases"] || 1) * 100).toFixed(2)));
-      d["deathRate"] =  Math.abs(Number((d["deaths"] / (d["cases"] || 1) * 100).toFixed(2)));
+      d["recoveryRate"] = Math.abs(Number((d["recovered"] / (d["cases"] || 1) * 100).toFixed(2)));
+      d["deathRate"] = Math.abs(Number((d["deaths"] / (d["cases"] || 1) * 100).toFixed(2)));
 
       delete d["District"]
       delete d["Confirmed"]

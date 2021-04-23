@@ -21,29 +21,14 @@
 
         <ion-row *ngIf="showNetworkElement" class="ion-no-padding">
           <ion-col size="12" class="ion-no-padding">
-            <div *ngIf="networkConnectivity"
-              style="text-align:center;background-color: #88e013;padding: 5px;color:rgb(22, 95, 4);font-size: 14px; border-radius: 2px;">
-              Connected
-            </div>
-            <div *ngIf="!networkConnectivity"
+            <div
               style="text-align: center; background-color: #f34d4d;padding: 5px;color:white;font-size: 14px;border-radius: 2px;">
               <div *ngIf="!retry">
                 <ion-text>
-                  Unable to Connect
+                  Temporarily stopping this service to avoid false data spread
                 </ion-text>
 
-                <ion-text style="padding-right: 5px;color: #222222;font-size: 14px;" (click)="onRetry()">
-                  <strong>
-                    <ion-icon name="refresh-outline"></ion-icon>
-                  </strong>
-                  <ion-label style="text-decoration: underline;"> Retry</ion-label>
-                </ion-text>
 
-              </div>
-              <div *ngIf="retry" style="font-size: 14px;">
-                <ion-spinner style=" width: 14px !important;height: 14px !important;color:white">
-                </ion-spinner>
-                Retrying
               </div>
 
               <!--ion-text style="background-color: #2db68d;color:white; opacity: 0.75; ">

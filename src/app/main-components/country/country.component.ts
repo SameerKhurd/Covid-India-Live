@@ -55,7 +55,7 @@ export class CountryComponent implements OnInit {
     this.networkService.loadStaticDataListener().subscribe(bool => {
       this.countryDataService.loadStaticData();
     });
-
+    this.networkService.setNetworkConnectivity(false);
   }
 
   progressBarUpdate() {

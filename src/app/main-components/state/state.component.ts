@@ -103,6 +103,8 @@ export class StateComponent implements OnInit, AfterViewInit {
       const selected = (e.target as HTMLElement).querySelector('[aria-checked="true"]');
       selected && selected.scrollIntoView({ block: 'center' });
     });
+    this.stateDataService.onRefresh();
+
   }
 
   scrollToTop() {

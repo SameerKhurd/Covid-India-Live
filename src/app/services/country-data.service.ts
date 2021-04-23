@@ -26,7 +26,7 @@ export class CountryDataService extends MainDataService {
       });
     //this.getStoredStateData(); 
     this.getStateDataFromServer();*/
-    this.getDataFromLocalStorage();
+    //this.getDataFromLocalStorage();
     //this.getDataFromServer()
     //this.loadStaticData();
   }
@@ -42,7 +42,7 @@ export class CountryDataService extends MainDataService {
 
   getDataFromServer() {
     //console.log("[Country Data Service : getDataFromServer]")
-    this.setLoading(true);
+    /*this.setLoading(true);
     this.setAllData({
       genericData: {},
       regionWiseData: [],
@@ -52,7 +52,7 @@ export class CountryDataService extends MainDataService {
       case_time_series: "https://api.covid19india.org/csv/latest/case_time_series.csv",
       state_wise: "https://api.covid19india.org/csv/latest/state_wise.csv"
     }
-    this.makeApiCalls(urls, "FromServer");
+    this.makeApiCalls(urls, "FromServer");*/
   }
 
   processData() {
