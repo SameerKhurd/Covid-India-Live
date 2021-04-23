@@ -182,9 +182,9 @@ export class StateDataService extends MainDataService {
       d["todayCases"] = Math.abs(Number(d["Delta_Confirmed"]))
       d["todayDeaths"] = Math.abs(Number(d["Delta_Deceased"]))
       d["todayRecovered"] = Math.abs(Number(d["Delta_Recovered"]))
-      d["activeRate"] = (d["active"] / (d["cases"] || 1) * 100).toFixed(2);
-      d["recoveryRate"] = (d["recovered"] / (d["cases"] || 1) * 100).toFixed(2);
-      d["deathRate"] = (d["deaths"] / (d["cases"] || 1) * 100).toFixed(2);
+      d["activeRate"] = Math.abs(Number((d["active"] / (d["cases"] || 1) * 100).toFixed(2)));
+      d["recoveryRate"] =  Math.abs(Number((d["recovered"] / (d["cases"] || 1) * 100).toFixed(2)));
+      d["deathRate"] =  Math.abs(Number((d["deaths"] / (d["cases"] || 1) * 100).toFixed(2)));
 
       delete d["District"]
       delete d["Confirmed"]
