@@ -56,7 +56,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     NetworkService,
     StateDataService,
     CountryDataService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    },
 
   ],
   bootstrap: [AppComponent]
