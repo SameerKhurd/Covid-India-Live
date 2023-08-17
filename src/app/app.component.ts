@@ -115,6 +115,4 @@ export class AppComponent implements OnInit {
   onSlideButtonTap(slideIndex) {
     this.slide.slideTo(slideIndex);
   }
-
-
 }
