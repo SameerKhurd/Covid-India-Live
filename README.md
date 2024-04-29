@@ -6,5 +6,6 @@
 * Sourced data from Covid19india.org.
 * Cross platform application for iOS, Android, and as a Progressive Web App (PWA).
 
+### [Go to hosted site](https://covid-india-live.firebaseapp.com/)  
 
 ![Alt text](cil_ln_img.png)
