@@ -21,10 +21,13 @@ Checkout&nbsp; [Live Demo : &nbsp;covid-india-live.firebaseapp.com ](https://cov
 
 ![Alt text](cil_ln_img.png)
 
+
+
 ## Contents
 
 - [Overview](#overview)
 - [Demo](#demo)
+- [Demo Video](#demo-video)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Data Source](#data-source)
@@ -34,12 +37,24 @@ Checkout&nbsp; [Live Demo : &nbsp;covid-india-live.firebaseapp.com ](https://cov
 - [Contributing](#contributing)
 - [Screenshots](#screenshots)
 
+
+
 ## Technologies Used
 
 - Ionic Framework (cross-platform framework).
 - Angular 
 - D3.js (creating interactive data visualizations).
 - Firebase Platform for web hosting.
+
+
+<br />
+
+## Demo Video
+
+
+https://github.com/SameerKhurd/Covid-India-Live/assets/16721546/90d70046-c144-49b4-9088-d6800795ff83
+
+
 
 ## Data Source
 
