@@ -27,9 +27,9 @@ Checkout&nbsp; [Live Demo : &nbsp;covid-india-live.firebaseapp.com ](https://cov
 
 - [Overview](#overview)
 - [Demo](#demo)
-- [Demo Video](#demo-video)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
+- [Demo Video](#demo-video)
 - [Data Source](#data-source)
 - [Platforms Supported](#platforms-supported)
 - [Installation](#installation)
@@ -47,7 +47,6 @@ Checkout&nbsp; [Live Demo : &nbsp;covid-india-live.firebaseapp.com ](https://cov
 - Firebase Platform for web hosting.
 
 
-<br />
 
 ## Demo Video
 
